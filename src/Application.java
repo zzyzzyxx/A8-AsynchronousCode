@@ -10,8 +10,14 @@ import java.util.concurrent.Executors;
 public class Application {
 	public static void main(String[] args) {
 		Assignment8 a8 = new Assignment8();
-		//List<Integer> allNumbers = Collections.synchronizedList(new ArrayList<>());
-		List<Integer> allNumbers = new ArrayList<>();
+		
+		
+//		List<Integer> allNumbers = new ArrayList<>();
+		//new ArrayList of integers is not enough,
+		//this step was the hardest, but
+		//I found a way to help the ArrayList to collect all numbers:
+		List<Integer> allNumbers = Collections.synchronizedList(new ArrayList<>());
+		
 		//not CPU but I/O bound task
 		//executor to use with CompletableFuture, instead of default one
 		ExecutorService eService = Executors.newCachedThreadPool();
@@ -32,8 +38,11 @@ public class Application {
 		System.out.println("All numbers fetched: " + allNumbers.size());
 		
 		//counting the numbers
+		//Collections.frequency applied to a HashSet will work, 
+		//assign the list to a Set
 		Set<Integer> mySet = new HashSet<>(allNumbers);
-
+		//and iterate through the loop 
+		//printing out the number of repetitions
 		for(Integer number: mySet){
 		 System.out.print(number + "=" + Collections.frequency(allNumbers,number)+", ");
 		}
