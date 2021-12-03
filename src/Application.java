@@ -18,7 +18,7 @@ public class Application {
 		//I found a way to help the ArrayList to collect all numbers:
 		List<Integer> allNumbers = Collections.synchronizedList(new ArrayList<>());
 		
-		//not CPU but I/O bound task
+		//not CPU but I/O bound task1
 		//executor to use with CompletableFuture, instead of default one
 		ExecutorService eService = Executors.newCachedThreadPool();
 		
@@ -26,10 +26,10 @@ public class Application {
 		
 		for(int i = 0; i < 1000; i++) {
 			CompletableFuture<Void> task = CompletableFuture.supplyAsync(() -> a8.getNumbers(), eService)
-					   										.thenAccept(allNumbers::addAll);
+					   										.thenAcceptAsync(allNumbers::addAll);
 			tasks.add(task);
-
 			}
+		
 		
 		//to keep the main thread going until all threads are completed (lesson 8)
 		while(tasks.stream().filter(CompletableFuture::isDone).count() < 1000) {
